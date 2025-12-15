@@ -5,7 +5,8 @@
   "scripts": {
     "start": "nx serve",
     "build": "nx build",
-    "test": "nx test"
+    "test": "nx test",
+    "db:setup": "npx prisma generate && npx prisma migrate deploy && npx prisma db seed"
   },
   "private": true,
   "prisma": {

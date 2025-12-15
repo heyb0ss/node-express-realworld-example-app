@@ -1,0 +1,69 @@
+name: CI-CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: realworld
+          POSTGRES_PASSWORD: realworld
+          POSTGRES_DB: realworld
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready -U realworld -d realworld"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+    env:
+      DATABASE_URL: "postgresql://realworld:realworld@postgres:5432/realworld?schema=public"
+      JWT_SECRET: 195df3451d3fd7b289ee9daad37fb61c
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18' 
+
+      - run: npm ci
+      - run: npm run db:setup
+      - run: npm test
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - run: |
+          docker build -t ghcr.io/${{ github.repository_owner }}/node-express-realworld-example-app:latest .
+          docker push ghcr.io/${{ github.repository_owner }}/node-express-realworld-example-app:latest
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy to Server
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_KEY }}
+          script: |
+            cd /opt/node-express-realworld-example-app
+            docker-compose pull
+            docker-compose up -d --build
