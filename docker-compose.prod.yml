@@ -1,0 +1,35 @@
+version: "3.8"
+
+services:
+  api:
+    image: ghcr.io/${IMAGE_OWNER}/node-express-realworld-example-app:latest
+    ports:
+      - "3000:3000"
+    stdin_open: true
+    tty: true
+    environment:
+      DATABASE_URL: "postgresql://realworld:realworld@postgres:5432/realworld?schema=public"
+      JWT_SECRET: 195df3451d3fd7b289ee9daad37fb61c
+      NODE_ENV: production
+    depends_on:
+      - postgres
+    networks:
+      - realworld-network
+
+  postgres:
+    image: postgres:15
+    hostname: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: realworld
+      POSTGRES_PASSWORD: realworld
+      POSTGRES_DB: realworld
+    ports:
+      - "5432:5432"
+    networks:
+      - realworld-network
+
+networks:
+  realworld-network:
+    name: realworld-network
+    driver: bridge
