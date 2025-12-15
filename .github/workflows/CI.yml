@@ -64,7 +64,7 @@ jobs:
           username: ${{ secrets.DEPLOY_USER }}
           key: ${{ secrets.DEPLOY_KEY }}
           source: "docker-compose.prod.yml"
-          target: "/home/vboxuser/node-express-realworld-example-app/docker-compose.prod.yml"
+          target: "/home/vboxuser/node-express-realworld-example-app/"
 
       - name: Deploy to Server
         uses: appleboy/ssh-action@v1
