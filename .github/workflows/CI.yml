@@ -64,6 +64,6 @@ jobs:
           username: ${{ secrets.DEPLOY_USER }}
           key: ${{ secrets.DEPLOY_KEY }}
           script: |
-            cd /opt/node-express-realworld-example-app
+            cd /home/vboxuser/node-express-realworld-example-app
             docker-compose pull
             docker-compose up -d --build
