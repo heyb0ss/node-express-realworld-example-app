@@ -23,7 +23,7 @@ jobs:
           --health-timeout=5s
           --health-retries=5
     env:
-      DATABASE_URL: "postgresql://realworld:realworld@postgres:5432/realworld?schema=public"
+      DATABASE_URL: "postgresql://realworld:realworld@localhost:5432/realworld?schema=public"
       JWT_SECRET: 195df3451d3fd7b289ee9daad37fb61c
 
     steps:
