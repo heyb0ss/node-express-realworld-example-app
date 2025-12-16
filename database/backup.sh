@@ -5,7 +5,7 @@ BACKUP_DIR="/backups"
 BACKUP_FILE="db_backup_$DATE.sql"
 DB_USER="realworld"
 DB_NAME="realworld"
-DB_HOST="realworld"
+DB_HOST="localhost"
 COMPRESSION="gzip"
 LOG_FILE="$BACKUP_DIR/backup_log.log"
 
@@ -28,4 +28,4 @@ echo "Sending push notification..." | tee -a $LOG_FILE
 curl -d "Database backup completed: $DB_NAME at $DATE" \
      -X POST https://ntfy.sh/database-backups | tee -a $LOG_FILE
 
-echo "Database backup process completed." | tee -a $LOG_FILE
+echo "Database backup process completed..." | tee -a $LOG_FILE
