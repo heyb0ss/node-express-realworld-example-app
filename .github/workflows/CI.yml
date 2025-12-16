@@ -73,7 +73,7 @@ jobs:
           username: ${{ secrets.DEPLOY_USER }}
           key: ${{ secrets.DEPLOY_KEY }}
           source: "database"
-          target: "/home/vboxuser/node-express-realworld-example-app/database"
+          target: "/home/vboxuser/node-express-realworld-example-app/"
 
       - name: Deploy to Server
         uses: appleboy/ssh-action@v1
