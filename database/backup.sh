@@ -9,6 +9,11 @@ DB_HOST="localhost"
 COMPRESSION="gzip"
 LOG_FILE="$BACKUP_DIR/backup_log.log"
 
+until pg_isready -h $DB_HOST -p 5432; do
+    echo "waiting for database to start..." | tee -a $LOG_FILE
+    sleep 2
+done
+
 
 echo "Starting database backup..." | tee -a $LOG_FILE
 if pg_dump -U $DB_USER -h $DB_HOST -F c $DB_NAME > "$BACKUP_DIR/$BACKUP_FILE"; then
