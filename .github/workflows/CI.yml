@@ -86,3 +86,13 @@ jobs:
             export IMAGE_OWNER=${{ github.repository_owner }}
             docker-compose -f docker-compose.prod.yml pull
             docker-compose -f docker-compose.prod.yml up -d --build
+
+      - name: Run Database Backup Script on Server
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_KEY }}
+          script: |
+            docker exec postgres \
+              /usr/local/bin/backup.sh

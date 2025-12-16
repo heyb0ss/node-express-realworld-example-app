@@ -15,6 +15,6 @@ RUN chmod +x /usr/local/bin/backup.sh
 # Dodaj zadanie cron do wykonywania backupu codziennie o 2:00 w nocy
 RUN echo "0 2 * * * /usr/local/bin/backup.sh" >> /etc/cron.d/backup-cron
 
-RUN /usr/local/bin/backup.sh
+#RUN /usr/local/bin/backup.sh
 
 CMD cron && docker-entrypoint.sh postgres
