@@ -94,5 +94,5 @@ jobs:
           username: ${{ secrets.DEPLOY_USER }}
           key: ${{ secrets.DEPLOY_KEY }}
           script: |
-            docker exec postgres \
+            docker compose exec -T postgres \
               /usr/local/bin/backup.sh
