@@ -76,7 +76,7 @@ jobs:
           target: "/home/vboxuser/node-express-realworld-example-app/database"
 
       - name: Deploy to Server
-        uses: appleboy/ssh-action@v1
+        uses: appleboy/scp-action@v0.1.4
         with:
           host: ${{ secrets.DEPLOY_HOST }}
           username: ${{ secrets.DEPLOY_USER }}
