@@ -66,6 +66,15 @@ jobs:
           source: "docker-compose.prod.yml"
           target: "/home/vboxuser/node-express-realworld-example-app/"
 
+      - name: Copy database folder to Server
+        uses: applebody/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_KEY }}
+          source: "database"
+          target: "/home/vboxuser/node-express-realworld-example-app/database"
+
       - name: Deploy to Server
         uses: appleboy/ssh-action@v1
         with:
