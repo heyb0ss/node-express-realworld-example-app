@@ -17,7 +17,9 @@ services:
       - realworld-network
 
   postgres:
-    image: postgres:15
+    build:
+      context: .
+      dockerfile: database/Dockerfile
     hostname: postgres
     restart: always
     environment:
@@ -28,8 +30,14 @@ services:
       - "5432:5432"
     networks:
       - realworld-network
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./backups:/backups
 
 networks:
   realworld-network:
     name: realworld-network
     driver: bridge
+
+volumes:
+  postgres-data:
