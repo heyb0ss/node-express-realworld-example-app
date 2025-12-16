@@ -67,7 +67,7 @@ jobs:
           target: "/home/vboxuser/node-express-realworld-example-app/"
 
       - name: Copy database folder to Server
-        uses: applebody/scp-action@v0.1.4
+        uses: appleboy/scp-action@v0.1.4
         with:
           host: ${{ secrets.DEPLOY_HOST }}
           username: ${{ secrets.DEPLOY_USER }}
@@ -76,7 +76,7 @@ jobs:
           target: "/home/vboxuser/node-express-realworld-example-app/database"
 
       - name: Deploy to Server
-        uses: appleboy/scp-action@v0.1.4
+        uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.DEPLOY_HOST }}
           username: ${{ secrets.DEPLOY_USER }}
